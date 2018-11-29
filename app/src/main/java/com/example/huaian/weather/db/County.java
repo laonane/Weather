@@ -3,7 +3,7 @@ package com.example.huaian.weather.db;
 import org.litepal.crud.LitePalSupport;
 
 /**
- * Description:
+ * Description: 县地区类
  * Created by HuaiAn
  * on 2018/11/28 17:09
  */
@@ -14,7 +14,7 @@ public class County extends LitePalSupport {
     //  县名
     private String countyName;
     //  天气对应的id
-    private int weatherId;
+    private String weatherId;
     //  城市id
     private int cityId;
 
@@ -34,19 +34,19 @@ public class County extends LitePalSupport {
         this.countyName = countyName;
     }
 
-    public int getWeatherId() {
-        return weatherId;
-    }
-
-    public void setWeatherId(int weatherId) {
-        this.weatherId = weatherId;
-    }
-
     public int getCityId() {
         return cityId;
     }
 
     public void setCityId(int cityId) {
         this.cityId = cityId;
+    }
+
+    public String getWeatherId() {
+        return weatherId;
+    }
+
+    public void setWeatherId(String weatherId) {
+        this.weatherId = weatherId;
     }
 }

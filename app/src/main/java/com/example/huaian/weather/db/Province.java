@@ -3,7 +3,7 @@ package com.example.huaian.weather.db;
 import org.litepal.crud.LitePalSupport;
 
 /**
- * Description:
+ * Description: 省区类
  * Created by HuaiAn
  * on 2018/11/28 16:59
  */
