@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="15dp">
+
+    <!--显示天气预报日期、天气概况、当天最低温度、最高温度-->
+
+    <TextView
+        android:id="@+id/date_text"
+        android:layout_gravity="center_vertical"
+        android:textColor="#fff"
+        android:layout_weight="2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/info_text"
+        android:gravity="center_vertical"
+        android:textColor="#fff"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/max_text"
+        android:gravity="right"
+        android:layout_gravity="right"
+        android:textColor="#fff"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/min_text"
+        android:gravity="right"
+        android:layout_gravity="right"
+        android:textColor="#fff"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>
