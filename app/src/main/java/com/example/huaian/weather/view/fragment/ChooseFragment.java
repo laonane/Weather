@@ -133,7 +133,6 @@ public class ChooseFragment extends Fragment implements BaseQuery.Location {
 
     @OnClick({R.id.back_button})
     public void onClicked() {
-        Log.e(TAG, "onClicked: 返回");
         if (currentLevel == LEVEL_COUNTY) {
             queryCities();
         } else if (currentLevel == LEVEL_CITY) {
@@ -200,7 +199,6 @@ public class ChooseFragment extends Fragment implements BaseQuery.Location {
      */
     @Override
     public void queryCities() {
-        Log.d(TAG, "queryCities: ");
         titleText.setText(selectedProvince.getProvinceName());
         backButton.setVisibility(View.VISIBLE);
         //  查询 selectedProvince.getId() 的字段，并填充到 City 中
@@ -217,7 +215,6 @@ public class ChooseFragment extends Fragment implements BaseQuery.Location {
         } else {
             int provinceCode = selectedProvince.getProvinceCode();
             String address = ConstantUtil.ADRESS + "/" + provinceCode;
-            Log.d(TAG, "queryCities: " + address);
             queryFormServer(address, "city");
         }
     }
@@ -227,7 +224,6 @@ public class ChooseFragment extends Fragment implements BaseQuery.Location {
      */
     @Override
     public void queryCounties() {
-//        Log.d(TAG, "queryCounties: ");
         titleText.setText(selectedCity.getCityName());
         backButton.setVisibility(View.VISIBLE);
         countyList = LitePal.where("cityid = ?",
@@ -244,7 +240,6 @@ public class ChooseFragment extends Fragment implements BaseQuery.Location {
             int provinceCode = selectedProvince.getProvinceCode();
             int cityCode = selectedCity.getCityCode();
             String address = ConstantUtil.ADRESS + "/" + provinceCode + "/" + cityCode;
-            Log.d(TAG, "queryCounties: " + address);
             queryFormServer(address, "county");
         }
     }
@@ -257,7 +252,6 @@ public class ChooseFragment extends Fragment implements BaseQuery.Location {
      */
     @Override
     public void queryFormServer(String address, String type) {
-//        Log.d(TAG, "queryFormServer: address：" + address + "type" + type);
         showProgressDialog();
         HttpUtil.HttpOkHttpRequest(address, new Callback() {
             @Override
@@ -276,7 +270,6 @@ public class ChooseFragment extends Fragment implements BaseQuery.Location {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String responseText = response.body().string();
-                Log.d(TAG, "onResponse: " + responseText);
                 boolean result = false;
                 if ("province".equals(type)) {
                     result = Utility.handleProvinceResponse(responseText);

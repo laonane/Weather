@@ -32,9 +32,9 @@
                 android:scrollbars="none">
 
                 <LinearLayout
-                    android:fitsSystemWindows="true"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fitsSystemWindows="true"
                     android:orientation="vertical">
 
                     <include layout="@layout/title" />
@@ -55,10 +55,10 @@
 
         <fragment
             android:id="@+id/choose_area_fragment"
-            android:layout_gravity="start"
             android:name="com.example.huaian.weather.view.fragment.ChooseFragment"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:layout_gravity="start" />
     </android.support.v4.widget.DrawerLayout>
 
 
