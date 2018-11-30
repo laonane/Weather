@@ -1,5 +1,6 @@
 package com.example.huaian.weather.view.activity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
@@ -23,6 +24,7 @@ import com.bumptech.glide.Glide;
 import com.example.huaian.weather.R;
 import com.example.huaian.weather.gson.Forecast;
 import com.example.huaian.weather.gson.Weather;
+import com.example.huaian.weather.service.AutoUpdateService;
 import com.example.huaian.weather.util.ConstantUtil;
 import com.example.huaian.weather.util.HttpUtil;
 import com.example.huaian.weather.util.LogUtil;
@@ -261,8 +263,9 @@ public class WeatherActivity extends AppCompatActivity {
         comfortText.setText(comfort);
         carWashText.setText(carWash);
         sportText.setText(sport);
-
         weatherLayout.setVisibility(View.VISIBLE);
+        Intent intent = new Intent(this, AutoUpdateService.class);
+        startService(intent);
     }
 
     @Override
