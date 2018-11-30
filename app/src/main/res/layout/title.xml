@@ -5,6 +5,15 @@
 
     <!--城市名，更新时间-->
 
+    <Button
+        android:id="@+id/nav_btn"
+        android:background="@drawable/ic_home"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="10dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp" />
+
     <TextView
         android:id="@+id/title_city"
         android:textColor="#fff"

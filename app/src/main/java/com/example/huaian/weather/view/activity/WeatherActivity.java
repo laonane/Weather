@@ -5,11 +5,14 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -30,6 +33,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -76,7 +80,13 @@ public class WeatherActivity extends AppCompatActivity {
     ImageView bingPicImg;
 
     @BindView(R.id.swipe_layout)
-    SwipeRefreshLayout swipeRefresh;
+    public SwipeRefreshLayout swipeRefresh;
+
+    @BindView(R.id.nav_btn)
+    Button navBtn;
+
+    @BindView(R.id.drawer_layout)
+    public DrawerLayout drawerLayout;
 
     Unbinder unbinder;
 
@@ -259,6 +269,12 @@ public class WeatherActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         unbinder.unbind();
+    }
+
+    @OnClick(R.id.nav_btn)
+    public void onViewClicked() {
+        //  系统默认方向弹出导航栏
+        drawerLayout.openDrawer(GravityCompat.START);
     }
 
 //    /**

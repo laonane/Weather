@@ -26,6 +26,7 @@ import com.example.huaian.weather.util.ConstantUtil;
 import com.example.huaian.weather.util.HttpUtil;
 import com.example.huaian.weather.util.LogUtil;
 import com.example.huaian.weather.util.Utility;
+import com.example.huaian.weather.view.activity.HomeActivity;
 import com.example.huaian.weather.view.activity.WeatherActivity;
 
 import org.litepal.LitePal;
@@ -150,11 +151,22 @@ public class ChooseFragment extends Fragment implements BaseQuery.Location {
             queryCounties();
         } else if (currentLevel == LEVEL_COUNTY) {
             String weatherId = countyList.get(pos).getWeatherId();
-            Intent intent = new Intent(getActivity(), WeatherActivity.class);
-            intent.putExtra("weather_id", weatherId);
-            startActivity(intent);
-
-            getActivity().finish();
+            /**
+             * instanceof 判断一个对象是否属于某个类
+             * 在 HomeActivty中则正常进行
+             * 若是WeatherActivity 则关闭策划栏，显示下拉刷新，请求天气信息
+             */
+            if (getActivity() instanceof HomeActivity) {
+                Intent intent = new Intent(getActivity(), WeatherActivity.class);
+                intent.putExtra("weather_id", weatherId);
+                startActivity(intent);
+                getActivity().finish();
+            } else if (getActivity() instanceof WeatherActivity){
+                WeatherActivity activity = (WeatherActivity) getActivity();
+                activity.drawerLayout.closeDrawers();
+                activity.swipeRefresh.setRefreshing(true);
+                activity.requestWeather(weatherId);
+            }
         }
     }
 
