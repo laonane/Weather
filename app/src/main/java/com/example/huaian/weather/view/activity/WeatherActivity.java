@@ -5,7 +5,9 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -73,24 +75,33 @@ public class WeatherActivity extends AppCompatActivity {
     @BindView(R.id.bing_pic_img)
     ImageView bingPicImg;
 
+    @BindView(R.id.swipe_layout)
+    SwipeRefreshLayout swipeRefresh;
+
     Unbinder unbinder;
 
     private static final String TAG = WeatherActivity.class.getSimpleName();
+
+    /**
+     * 记录城市的天气Id
+     */
+    private String mWeatherId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //  系统在5.0以上才会执行沉浸式状态栏
-        if (Build.VERSION.SDK_INT >= 21){
+        if (Build.VERSION.SDK_INT >= 21) {
             View decorView = getWindow().getDecorView();
             //  全屏 | 保持整个View稳定
             decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                            | View.SYSTEM_UI_FLAG_LAYOUT_STABLE );
+                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
             //  设置透明色
             getWindow().setStatusBarColor(Color.TRANSPARENT);
         }
         setContentView(R.layout.activity_weather);
 
+        //  绑定butterknife
         unbinder = ButterKnife.bind(this);
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         String bingPic = prefs.getString("bing_pic", null);
@@ -103,15 +114,24 @@ public class WeatherActivity extends AppCompatActivity {
         if (weatherString != null) {
             //  有缓存直接解析天气数据
             Weather weather = Utility.handleWeatherResponse(weatherString);
-//            List testList= weather.forecastList;
+            mWeatherId = weather.basic.weatherId;
             showWeatherInfo(weather);
         } else {
             //  无缓存的时候去服务器查询天气数据
-            String weatherId = getIntent().getStringExtra("weather_id");
+            mWeatherId = getIntent().getStringExtra("weather_id");
             //  无数据先隐藏，避免突兀
             weatherLayout.setVisibility(View.INVISIBLE);
-            requestWeather(weatherId);
+            requestWeather(mWeatherId);
         }
+        swipeRefresh.setColorSchemeResources(R.color.colorPrimary);
+        //  下拉刷新
+        swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                Log.d(TAG, "onRefresh: 下拉刷新");
+                requestWeather(mWeatherId);
+            }
+        });
     }
 
     /**
@@ -157,6 +177,8 @@ public class WeatherActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         Toast.makeText(WeatherActivity.this, "获取天气信息失败", Toast.LENGTH_SHORT).show();
+                        //  取消刷新动画
+                        swipeRefresh.setRefreshing(false);
                     }
                 });
             }
@@ -173,10 +195,14 @@ public class WeatherActivity extends AppCompatActivity {
                                     PreferenceManager.getDefaultSharedPreferences(WeatherActivity.this).edit();
                             editor.putString("weather", responseText);
                             editor.apply();
+                            mWeatherId = weather.basic.weatherId;
                             showWeatherInfo(weather);
+                            Toast.makeText(WeatherActivity.this, "天气信息已经更新", Toast.LENGTH_SHORT).show();
                         } else {
                             Toast.makeText(WeatherActivity.this, "获取天气信息失败", Toast.LENGTH_SHORT).show();
                         }
+                        //  取消刷新动画
+                        swipeRefresh.setRefreshing(false);
                     }
                 });
             }
@@ -234,4 +260,13 @@ public class WeatherActivity extends AppCompatActivity {
         super.onDestroy();
         unbinder.unbind();
     }
+
+//    /**
+//     *  下拉刷新
+//     */
+//    @OnClick(R.id.swipe_layout)
+//    public void onSwipeRefresh() {
+//        Log.d(TAG, "onViewClicked: 下拉刷新");
+//        requestWeather(mWeatherId);
+//    }
 }
