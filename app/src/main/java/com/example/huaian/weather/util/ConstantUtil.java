@@ -15,5 +15,15 @@ public class ConstantUtil {
     /**
      * 和风天气请求api
      */
-    public static final String WEATHER_URL = "http://guolin.tech/api/weather";
+    public static final String WEATHER_URL = "http://guolin.tech/api/weather?cityid=";
+
+    /**
+     * 天气密钥
+     */
+    public static final String WEATHER_KEY = "&key=6c455039547e4d60a4da6c2e60d863b9";
+
+    /**
+     * 必应每日一图URL
+     */
+    public static final String BING_PIC = "http://guolin.tech/api/bing_pic";
 }
