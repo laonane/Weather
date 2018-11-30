@@ -10,6 +10,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -117,7 +118,7 @@ public class WeatherActivity extends AppCompatActivity {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         String bingPic = prefs.getString("bing_pic", null);
         if (bingPic != null) {
-            Glide.with(this).load(bingPic).into(bingPicImg);
+            Glide.with(this).load(bingPic);
         } else {
             loadBingPic();
         }
@@ -139,6 +140,7 @@ public class WeatherActivity extends AppCompatActivity {
         swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                Log.d(TAG, "onRefresh: 下拉刷新");
                 requestWeather(mWeatherId);
             }
         });
@@ -277,4 +279,13 @@ public class WeatherActivity extends AppCompatActivity {
         //  系统默认方向弹出导航栏
         drawerLayout.openDrawer(GravityCompat.START);
     }
+
+//    /**
+//     *  下拉刷新
+//     */
+//    @OnClick(R.id.swipe_layout)
+//    public void onSwipeRefresh() {
+//        Log.d(TAG, "onViewClicked: 下拉刷新");
+//        requestWeather(mWeatherId);
+//    }
 }
