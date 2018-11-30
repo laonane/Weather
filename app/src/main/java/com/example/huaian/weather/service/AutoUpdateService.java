@@ -8,10 +8,10 @@ import android.content.SharedPreferences;
 import android.os.IBinder;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
-import android.util.Log;
 
 import com.example.huaian.weather.gson.Weather;
 import com.example.huaian.weather.util.HttpUtil;
+import com.example.huaian.weather.util.LogUtil;
 import com.example.huaian.weather.util.Utility;
 
 import java.io.IOException;
@@ -29,7 +29,7 @@ public class AutoUpdateService extends Service {
     private static final String TAG = AutoUpdateService.class.getSimpleName();
 
     public AutoUpdateService() {
-        Log.i(TAG, "AutoUpdateService: 服务已经启动!");
+        LogUtil.i(TAG, "AutoUpdateService: 服务已经启动!");
     }
 
     @Override
